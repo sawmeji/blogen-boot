@@ -5,7 +5,7 @@
 <nav th:fragment="navBar" class="navbar navbar-expand-md navbar-dark bg-dark ">
 
   <div class="container">
-    <a href="" class="navbar-brand">Blogen</a>
+    <a href="" class="navbar-brand"><h1><b>Blogen</b></h1></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -16,13 +16,13 @@
           <a th:href="@{/home}" class="nav-link">Dashboard</a>
         </li>
         <li class="nav-item px-2">
-          <a th:href="@{/list-categories}" class="nav-link">Categories</a>
+          <a th:href="@{/list-posts}" id="postLink" class="nav-link">Posts</a>
         </li>
         <li class="nav-item px-2">
-          <a href="" class="nav-link">Posts</a>
+          <a th:href="@{/list-categories}" id="categoryLink" class="nav-link">Categories</a>
         </li>
         <li class="nav-item px-2">
-          <a href="" class="nav-link">Users</a>
+          <a th:href="@{/list-users}" id="userLink" class="nav-link">Users</a>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">

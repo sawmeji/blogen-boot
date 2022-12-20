@@ -1,68 +1,183 @@
 <!DOCTYPE html>
-<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <body>
 <div th:fragment="dashBoardHeader">
 
-  <header class="bg-primary text-white py-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h1><i class="fas fa-cogs mr-1"></i>Dashboard</h1>
-        </div>
-      </div>
-    </div>
-  </header>
-  <!--Action Section-->
-  <section class="py-4 mb-4 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4">
-          <a href="#" class="btn btn-lg btn-primary btn-block">
-            <i class="fas fa-plus"></i> Add Post</a>
-        </div>
-        <div class="col-md-4">
-          <a href="#" class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#addCategoryModal">
-            <i class="fas fa-plus"></i> Add Category</a>
-        </div>
-        <div class="col-md-4">
-          <a href="#" class="btn btn-lg btn-warning btn-block">
-            <i class="fas fa-plus"></i> Add User</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--Category Modal-->
-  <div class="modal fade" id="addCategoryModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <form th:action="@{/save-category}" th:object="${category}" method="post">
-
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="addCategoryModalLabel">Add Categories</h5>
-          <button class="close" data-dismiss="modal"><span>&times;</span></button>
-        </div>
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="title" class="form-control-label">Title</label>
-              <input type="text" th:field="*{title}" class="form-control" id="title">
+    <header class="bg-primary text-white py-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1><i class="fas fa-cogs mr-1"></i>Dashboard</h1>
+                </div>
             </div>
-            <div class="form-group">
-              <label for="datePosted" class="form-control-label"></label>
-              <input type="date" th:field="*{datePosted}" id="datePosted" class="form-control"></div>
-          </div>
+        </div>
+    </header>
+    <!--Action Section-->
+    <section class="py-4 mb-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="#" class="btn btn-lg btn-primary btn-block" data-toggle="modal"
+                       data-target="#addPostModal">
+                        <i class="fas fa-plus"></i> Add Post</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" class="btn btn-lg btn-success btn-block" data-toggle="modal"
+                       data-target="#addCategoryModal">
+                        <i class="fas fa-plus"></i> Add Category</a>
+                </div>
+                <div class="col-md-4">
+                    <a href="#" class="btn btn-lg btn-warning btn-block" data-toggle="modal"
+                       data-target="#addUserModal">
+                        <i class="fas fa-plus"></i> Add User</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-          <div class="modal-footer">
-            <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <input type="submit" class="btn btn-success" value="Add Category">
-          </div>
+    <section id="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div th:replace="fragments/posts.html :: postTable"></div>
+                </div>
 
-        </form>
-      </div>
+                <div class="col-md-3">
+                    <div class="card text-center bg-primary text-white mb-3">
+                        <div class="card-block">
+                            <h3>Post</h3>
+                            <h1 class="display-4">
+                                <i class="fas fa-pencil-alt"></i><span th:text="${posts.size()}"></span>
+                            </h1>
+                            <a th:href="@{/list-posts}" class="btn btn-sm btn-outline-light btn-block">View</a>
+                        </div>
+                    </div>
+                    <div class="card text-center bg-success text-white mb-3">
+                        <div class="card-block">
+                            <h3>Category</h3>
+                            <h1 class="display-4">
+                                <i class="fas fa-folder-open"></i><span th:text="${categories.size()}"></span>
+                            </h1>
+                            <a th:href="@{/list-categories}" class="btn btn-sm btn-outline-light btn-block">View</a>
+                        </div>
+                    </div>
+                    <div class="card text-center bg-warning text-white mb-3">
+                        <div class="card-block">
+                            <h3>User</h3>
+                            <h1 class="display-4">
+                                <i class="fas fa-pencil-alt"></i><span th:text="${users.size()}"></span>
+                            </h1>
+                            <a th:href="@{/list-users}" class="btn btn-sm btn-outline-light btn-block">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--Category Modal-->
+    <div class="modal fade" id="addCategoryModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/save-category}" th:object="${category}" method="post">
+
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="addCategoryModalLabel">Add Categories</h5>
+                        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title" class="form-control-label">Title</label>
+                            <input type="text" th:field="*{title}" class="form-control" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="datePosted" class="form-control-label">Date Posted</label>
+                            <input type="date" th:field="*{datePosted}" id="datePosted" class="form-control"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-success" value="Add Category">
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
+    <!--User Modal-->
+    <div class="modal fade" id="addUserModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/save-user}" th:object="${user}" method="post">
+                    <div class="modal-header bg-warning text-white">
+                        <h5 class="modal-title" id="addUserModalLabel">Add Users</h5>
+                        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="form-control-label">Name</label>
+                            <input type="text" th:field="*{name}" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-control-label">Email</label>
+                            <input type="text" th:field="*{email}" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateRegistered" class="form-control-label">Date Registered</label>
+                            <input type="date" th:field="*{dateRegistered}" class="form-control" id="dateRegistered">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-warning" value="Add User"></div>
+                </form>
+            </div>
+        </div>
+    </div>
 
+    <!--Post Modal-->
+    <div class="modal fade" id="addPostModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form th:action="@{/save-post}" th:object="${post}" method="post">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Add Post</h5>
+                        <button class="close" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-control-label">Title</label>
+                            <input type="text" th:field="*{title}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Choose Category</label>
+                            <select class="form-control custom-select" th:field="*{category.id}">
+                                <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                        th:text="${cat.title}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Choose User</label>
+                            <select class="custom-select" th:field="*{user.id}">
+                                <option th:each="use : ${users}" th:value="${use.id}"
+                                        th:text="${use.name}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Date Posted</label>
+                            <input type="date" th:field="*{datePosted}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" value="Add Post" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 
